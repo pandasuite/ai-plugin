@@ -1,0 +1,19 @@
+{
+  "name": "pandasuite",
+  "description": "Explore and understand PandaSuite Studio projects from Claude Code — screens, units, structure, and state.",
+  "version": "0.1.0",
+  "author": {
+    "name": "PandaSuite",
+    "url": "https://pandasuite.com"
+  },
+  "homepage": "https://pandasuite.com",
+  "repository": "https://github.com/pandasuite/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "pandasuite",
+    "no-code",
+    "studio",
+    "app-builder",
+    "interactive"
+  ]
+}

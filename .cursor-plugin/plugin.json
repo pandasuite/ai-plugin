@@ -1,0 +1,18 @@
+{
+  "name": "pandasuite",
+  "displayName": "PandaSuite",
+  "version": "0.1.0",
+  "description": "Explore and understand PandaSuite Studio projects from Cursor.",
+  "author": {
+    "name": "PandaSuite"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pandasuite",
+    "no-code",
+    "studio",
+    "app-builder",
+    "interactive"
+  ],
+  "logo": "assets/logo.svg"
+}

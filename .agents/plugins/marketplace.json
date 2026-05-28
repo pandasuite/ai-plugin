@@ -1,0 +1,12 @@
+{
+  "name": "pandasuite",
+  "interface": { "displayName": "PandaSuite" },
+  "plugins": [
+    {
+      "name": "pandasuite",
+      "source": { "source": "url", "url": "https://github.com/pandasuite/ai-plugin.git" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

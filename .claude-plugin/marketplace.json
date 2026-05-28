@@ -1,0 +1,12 @@
+{
+  "name": "pandasuite",
+  "description": "PandaSuite plugins for AI agents — connect the PandaSuite Studio MCP and explore your projects.",
+  "owner": { "name": "PandaSuite", "url": "https://pandasuite.com" },
+  "plugins": [
+    {
+      "name": "pandasuite",
+      "source": "./",
+      "description": "Explore and understand PandaSuite Studio projects — screens, units, structure, and state (read-only)."
+    }
+  ]
+}

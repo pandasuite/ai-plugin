@@ -1,0 +1,41 @@
+{
+  "name": "pandasuite",
+  "version": "0.1.0",
+  "description": "Explore and understand PandaSuite Studio projects from Codex.",
+  "author": {
+    "name": "PandaSuite",
+    "url": "https://pandasuite.com"
+  },
+  "homepage": "https://pandasuite.com",
+  "repository": "https://github.com/pandasuite/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "pandasuite",
+    "no-code",
+    "studio",
+    "app-builder",
+    "interactive"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "PandaSuite",
+    "shortDescription": "Explore PandaSuite Studio projects",
+    "longDescription": "Connect an AI agent to your PandaSuite Studio project: list screens, inspect units and containers, understand structure and state — read-only.",
+    "developerName": "PandaSuite",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://pandasuite.com",
+    "privacyPolicyURL": "https://www.iubenda.com/privacy-policy/47093119",
+    "termsOfServiceURL": "https://www.iubenda.com/terms-and-conditions/47093119",
+    "defaultPrompt": [
+      "List the screens in my PandaSuite project",
+      "Describe the structure of this screen",
+      "What units are on the home screen?"
+    ],
+    "brandColor": "#1ED3A3",
+    "logo": "./assets/logo.svg"
+  }
+}

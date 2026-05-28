@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/release-it@20/schema/release-it.json",
+  "npm": {
+    "publish": false
+  },
+  "git": {
+    "tagName": "v${version}",
+    "commitMessage": "Mark v${version} as the distributable plugin release\n\nSynchronizes the plugin manifests under one release tag so installed clients can detect the update.\n\nConfidence: high\nScope-risk: narrow\nTested: npm test"
+  },
+  "github": {
+    "release": true
+  },
+  "hooks": {
+    "after:bump": "node scripts/sync-version.mjs ${version}",
+    "before:git:release": "npm test"
+  }
+}

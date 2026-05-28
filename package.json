@@ -1,0 +1,16 @@
+{
+  "name": "pandasuite-ai-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "release": "release-it",
+    "test": "node scripts/validate.mjs",
+    "validate": "node scripts/validate.mjs",
+    "version:sync": "node scripts/sync-version.mjs"
+  },
+  "devDependencies": {
+    "release-it": "^20.0.1"
+  }
+}
