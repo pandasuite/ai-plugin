@@ -28,6 +28,24 @@ Authentication is OAuth — no API key to paste. Most tools trigger it on first 
   - `understanding-projects` — read a project the way a no-coder sees it: screens, persistent layers, and the names Studio uses (not the technical type strings).
   - `docs-how-to` — search the documentation to answer how-to and troubleshooting questions.
 
+## Use the skills in your own agent (npm)
+
+The same skills also ship as a data package, so you can inject them into an AI SDK agent (e.g. the Claude Agent SDK) instead of installing the full plugin.
+
+```sh
+npm install @pandasuite/skills
+```
+
+```js
+import { skills } from "@pandasuite/skills";
+
+// skills: { name, description, body, files? }[]
+const gettingStarted = skills.find((s) => s.name === "getting-started");
+console.log(gettingStarted?.body); // the SKILL.md markdown, ready to inject
+```
+
+Each entry is parsed from a `SKILL.md`: `name`, `description`, the markdown `body`, and any companion `files` (relative path → contents). Tool names in the bodies are harness-neutral (no `mcp__` prefix), so they work as-is in an AI SDK runtime.
+
 ## Legal
 
 [Privacy Policy](https://www.iubenda.com/privacy-policy/47093119) · [Terms](https://www.iubenda.com/terms-and-conditions/47093119) · [Cookie Policy](https://www.iubenda.com/privacy-policy/47093119/cookie-policy)

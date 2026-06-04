@@ -14,6 +14,7 @@ const EXPECTED_FILES = [
   ".agents/plugins/marketplace.json",
   "skills/getting-started/SKILL.md",
   "assets/logo.svg",
+  "LICENSE",
   "README.md",
   ".release-it.json",
   "package.json",
