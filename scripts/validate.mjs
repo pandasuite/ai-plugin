@@ -115,6 +115,18 @@ async function validateSkillFrontmatter() {
   }
 }
 
+async function validateNoClientPrefixedTools() {
+  for await (const file of walkFiles("skills")) {
+    if (!file.endsWith("SKILL.md")) continue;
+    const text = await readText(file);
+    if (text.includes("mcp__")) {
+      fail(
+        `${file}: contains a client-prefixed tool name (mcp__…). Use the bare tool name — the AI SDK runtime exposes MCP tools without a prefix.`,
+      );
+    }
+  }
+}
+
 async function validateManifests() {
   const codex = await readJson(".codex-plugin/plugin.json");
   const claude = await readJson(".claude-plugin/plugin.json");
@@ -192,6 +204,7 @@ await validateExpectedFiles();
 await validateJsonFiles();
 await validateLogo();
 await validateSkillFrontmatter();
+await validateNoClientPrefixedTools();
 await validateManifests();
 
 if (failures.length) {
