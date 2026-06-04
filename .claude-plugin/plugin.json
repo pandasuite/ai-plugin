@@ -1,7 +1,7 @@
 {
   "name": "pandasuite",
   "description": "Explore and understand PandaSuite Studio projects from Claude Code — screens, units, structure, and state.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "PandaSuite",
     "url": "https://pandasuite.com"
