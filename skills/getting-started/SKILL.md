@@ -1,40 +1,23 @@
 ---
 name: getting-started
-description: Use when working with a PandaSuite Studio project via the PandaSuite MCP — the domain model, the read-only contract, and the connect → listPublications → openProject → describe → execute flow.
+description: Use when connecting to the PandaSuite MCP or reading a Studio project — the read-only contract and how to operate its describe / execute catalog tools.
 ---
 
-# Getting started with PandaSuite Studio
+# Operating the PandaSuite MCP
 
-PandaSuite Studio is a no-code platform for building interactive apps. This MCP exposes a **read-only** view of a Studio *project* — screens, units, containers, states, bindings, actions, and resources. It never modifies anything.
+This MCP exposes a **read-only** view of a PandaSuite Studio *project* — screens, units, states, bindings, actions, resources. It never modifies anything. To explain what you find in the user's own terms, see the understanding-projects skill.
 
-## Domain model
+## The flow
 
-- **unit** — the atomic building block (button, image, group, gallery, data provider, …). Every unit has an `id`, a `type` (its manifest id), and a place in the tree.
-- **screen** — a `ViewFolder`; traverse its `worldId` to reach the units on it.
-- **container** — a unit that holds children (group, gallery, world, …).
-- **state** — containers can carry states; `statePath` is an *ordered array* — treat it as an array, never assume length 1.
-- **project root** — the top of the unit tree.
+Each step is a separate `mcp__pandasuite__*` tool call:
 
-## How to use this MCP
+1. **`listPublications({})`** — discover the account's projects; the value you open is a folder id at `publications[].folders[].id`. *(Skip if you already have the `folder_id`, e.g. from the Studio URL.)*
+2. **`openProject({ folder_id })`** — set the current project. Required first, or catalog calls fail with `NoCurrentProject`.
+3. **`describe({})`** — the manual of every `codemode.*` function available in `execute`, with signatures and worked examples. It is the source of truth for the live catalog; read it rather than memorizing.
+4. **`execute({ code })`** — run **JavaScript** (not TypeScript — the catalog types are documentation only) that calls `codemode.*` functions and `return`s a result.
 
-Each step is a separate MCP tool call (`mcp__pandasuite__*`):
+## Worth knowing
 
-1. **Connect** the `pandasuite` MCP. The first call triggers OAuth sign-in to PandaSuite.
-2. **`listPublications({})`** — discover the account's projects. Each publication carries a `folders` array; the value you open is a folder id at `publications[].folders[].id`. *(Skip if you already know the `folder_id`, e.g. from the Studio URL.)*
-3. **`openProject({ folder_id })`** — set the current project. Required before any catalog call; otherwise catalog functions return `NoCurrentProject`.
-4. **`describe({})`** — returns the manual of every `codemode.*` function available inside `execute`, with typed signatures and worked examples. **Read it before writing `execute` code** — it is the source of truth for the live catalog.
-5. **`execute({ code })`** — run JavaScript that calls the documented `codemode.*` functions and `return`s a result.
-
-## Worked example
-
-```
-describe({})
-execute({ code: "const screens = await codemode.getScreens(); return codemode.getChildren({ unitId: screens[0].worldId });" })
-```
-
-## Notes
-
-- **Read-only** — nothing here mutates the project.
-- **Component *contracts* vs project *instances*.** The flow above reads the *open project*. To inspect a component *type* itself (its properties, events, actions — what any instance can do), `describe({})` also surfaces manifest tools (`listComponents` / `getManifest`) that do **not** require an open project.
-- **Write JavaScript, not TypeScript**, inside `execute`; the catalog is documented in TypeScript for reference only.
-- The catalog evolves with the product — always rely on `describe({})` for the current function list rather than memorizing it.
+- First call triggers OAuth sign-in.
+- The `type` and ids you read (`worldId`, …) are internal — never surface them to the user; translate to Studio names first (understanding-projects skill).
+- `listComponents` / `getManifest` inspect a component *type's* contract and work **without** an open project.
