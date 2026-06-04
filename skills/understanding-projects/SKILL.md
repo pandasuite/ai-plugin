@@ -5,7 +5,7 @@ description: Use when exploring, describing, or explaining a PandaSuite project 
 
 # Understanding a PandaSuite project
 
-The people you talk to are **no-coders** — they built their app in Studio's visual editor and think in *screens, elements, and interactions*, not data types. Read the project through the MCP, then explain it in **their** language.
+The people you talk to live in **PandaSuite's Studio** — they think in _screens, elements, interactions_, not data types or tool names. Speak in those concepts, and narrate your steps the same way: _"I'm looking at how your home screen is built"_, not the tool calls and ids behind it.
 
 ## Resolve names live — never invent them
 
