@@ -16,4 +16,4 @@ Neither outranks the other. The project can tell you a lot early, before any doc
 - **Don't give up on one empty search** — rephrase (the feature's user-facing name, the symptom). Empty results don't mean it's undocumented.
 - Answer in the user's language, in Studio terms.
 
-The tool is `searchDocs` (`mcp__pandasuite__searchDocs`); use the server-prefixed name when several MCP servers are connected.
+Use your environment's documentation-search tool to look things up — it may be exposed as `searchDocs` or `search_docs` depending on the client.

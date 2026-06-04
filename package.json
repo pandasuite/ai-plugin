@@ -1,10 +1,42 @@
 {
-  "name": "pandasuite-ai-plugin",
+  "name": "@pandasuite/skills",
   "version": "0.2.1",
-  "private": true,
+  "description": "PandaSuite agent skills (operate the PandaSuite MCP, read a project, answer from the docs), packaged as data for AI SDK runtimes.",
   "type": "module",
   "license": "MIT",
+  "author": "PandaSuite",
+  "homepage": "https://github.com/pandasuite/ai-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandasuite/ai-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pandasuite/ai-plugin/issues"
+  },
+  "keywords": [
+    "pandasuite",
+    "mcp",
+    "ai",
+    "agent",
+    "skills",
+    "ai-sdk"
+  ],
+  "main": "dist/skills.js",
+  "module": "dist/skills.js",
+  "types": "dist/skills.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/skills.d.ts",
+      "import": "./dist/skills.js"
+    }
+  },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "build": "node scripts/generate-skills.mjs",
+    "prepublishOnly": "npm run build && npm test",
     "release": "release-it",
     "test": "node scripts/validate.mjs",
     "validate": "node scripts/validate.mjs",

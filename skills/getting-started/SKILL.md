@@ -9,7 +9,7 @@ This MCP exposes a **read-only** view of a PandaSuite Studio *project* — scree
 
 ## The flow
 
-Each step is a separate `mcp__pandasuite__*` tool call:
+Each step is a separate MCP tool call:
 
 1. **`listPublications({})`** — discover the account's projects; the value you open is a folder id at `publications[].folders[].id`. *(Skip if you already have the `folder_id`, e.g. from the Studio URL.)*
 2. **`openProject({ folder_id })`** — set the current project. Required first, or catalog calls fail with `NoCurrentProject`.

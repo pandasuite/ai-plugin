@@ -1,0 +1,37 @@
+---
+name: release
+
+# release-it (npm run release) bumps the version, tags vX.Y.Z and creates a
+# GitHub Release. That "published" release fires this workflow, which is the
+# only thing that publishes @pandasuite/skills to npm.
+"on":
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for OIDC trusted publishing + provenance
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+
+      # Trusted publishing needs npm >= 11.5.1; Node 22 ships an older npm.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+
+      - run: npm ci
+
+      # prepublishOnly (npm run build && npm test) builds dist/ and validates
+      # before the tarball is packed. No NODE_AUTH_TOKEN: OIDC authenticates the
+      # publish and generates provenance automatically — requires a trusted
+      # publisher on npmjs.com (repo pandasuite/ai-plugin, workflow release.yml).
+      - name: Publish to npm
+        run: npm publish
