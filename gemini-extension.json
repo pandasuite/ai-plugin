@@ -7,16 +7,9 @@
       "command": "npx",
       "args": [
         "mcp-remote@latest",
-        "${PANDASUITE_MCP_URL:-https://mcp.pandasuite.com/mcp}"
+        "https://mcp.pandasuite.com/mcp"
       ]
     }
   },
-  "contextFileName": "GEMINI.md",
-  "settings": [
-    {
-      "name": "PandaSuite MCP URL",
-      "description": "PandaSuite MCP endpoint (default https://mcp.pandasuite.com/mcp). Override if self-hosting.",
-      "envVar": "PANDASUITE_MCP_URL"
-    }
-  ]
+  "contextFileName": "GEMINI.md"
 }
