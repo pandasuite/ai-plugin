@@ -11,7 +11,6 @@ const EXPECTED_FILES = [
   ".claude-plugin/marketplace.json",
   ".codex-plugin/plugin.json",
   ".cursor-plugin/plugin.json",
-  "gemini-extension.json",
   "GEMINI.md",
   ".agents/plugins/marketplace.json",
   "skills/getting-started/SKILL.md",
@@ -134,7 +133,6 @@ async function validateManifests() {
   const codex = await readJson(".codex-plugin/plugin.json");
   const claude = await readJson(".claude-plugin/plugin.json");
   const cursor = await readJson(".cursor-plugin/plugin.json");
-  const gemini = await readJson("gemini-extension.json");
   const pkg = await readJson("package.json");
   const packageLock = await readJson("package-lock.json");
   const agentsMarketplace = await readJson(".agents/plugins/marketplace.json");
@@ -156,7 +154,6 @@ async function validateManifests() {
     [".codex-plugin/plugin.json", codex],
     [".claude-plugin/plugin.json", claude],
     [".cursor-plugin/plugin.json", cursor],
-    ["gemini-extension.json", gemini],
     ["plugin.json", antigravity],
   ]) {
     if (!manifest) continue;

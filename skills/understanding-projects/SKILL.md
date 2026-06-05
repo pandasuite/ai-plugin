@@ -33,4 +33,8 @@ Effects emerge from simple pieces combined, not from big widgets — this is you
 
 ## Never show the user
 
-Pure plumbing — translate or omit: `statestack`, `TMWorld`, `rootunit`, `worldId`, `did`, `masterFront`/`masterBack` (say "Foreground"/"Background"), and the raw `type` ids (`button`, `list`, …).
+The raw layer is for *your* reasoning, not the user's eyes — read it freely, translate when you speak.
+
+Pure plumbing — translate or omit: `statestack`, `TMWorld`, `rootunit`, `worldId`, `did`, `masterFront`/`masterBack` (say "Foreground"/"Background"), and the raw `type` ids (`button`, `list`, …). Auto-generated instance names (`Collection-List84494`) aren't labels either — use the element's role or its renamed name.
+
+**Binding & action expressions** (`[data:…]`, `…/@getByIndex`, `[eval:…]`) — never paste the raw string; say what the binding *does*, in the source/field names the user sees, resolved from the project + `searchDocs` (e.g. a collection exposes **Current Item** / *Élément courant*). Don't reproduce the path or invent a separator notation.
