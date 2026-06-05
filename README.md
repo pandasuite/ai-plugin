@@ -1,8 +1,18 @@
 # PandaSuite — AI plugin
 
-Connect an AI agent to your [PandaSuite Studio](https://pandasuite.com) project. Read-only exploration of screens, units, structure, and state via the PandaSuite MCP (`https://mcp.pandasuite.com`), plus skills that help the agent operate the MCP, explain your project in plain language, and answer questions from the documentation. Works in Claude Code, Codex, Cursor, and Gemini CLI.
+Give your AI agent eyes on the app you built in [PandaSuite](https://pandasuite.com).
 
-Authentication is OAuth — no API key to paste. Most tools trigger it on first connect; Codex uses an explicit `codex mcp login pandasuite` (see below).
+PandaSuite is a no-code studio for interactive apps, where rich behavior is *composed* from simple pieces rather than dropped in as one big widget. This plugin lets an agent read a Studio project and talk about it the way you do — in screens, elements, and interactions, not data types or tool names.
+
+Ask it to:
+
+- **Explain a project** — yours, or one a teammate built — screen by screen, in plain language.
+- **Work out why something won't work** — an audio that won't play, a link that doesn't trigger — by reading both the documentation and how your app is actually built.
+- **Show you how to make something** — what's behind a set of tabs, or a parallax — grounded in the docs, not guesswork.
+
+It's **read-only**. The agent sees your project; it never changes it.
+
+Works in Claude Code, Codex, Cursor, and Gemini CLI. Sign-in is OAuth in the browser — no API key to paste.
 
 ## Install
 
@@ -14,23 +24,25 @@ Authentication is OAuth — no API key to paste. Most tools trigger it on first 
 - `gemini extensions install https://github.com/pandasuite/ai-plugin`
 
 **Codex**
-- Install: `codex plugin marketplace add pandasuite/ai-plugin`, then `codex plugin add pandasuite@pandasuite`. (Or run `codex` and use `/plugins` in the TUI.)
-- Sign in: `codex mcp login pandasuite` — opens your browser for PandaSuite OAuth. Verify with `codex mcp get pandasuite`.
+- `codex plugin marketplace add pandasuite/ai-plugin`, then `codex plugin add pandasuite@pandasuite` (or run `codex` and use `/plugins`).
+- Sign in: `codex mcp login pandasuite` — opens the browser for OAuth. Check it with `codex mcp get pandasuite`.
 
 **Cursor**
 - Install from this repo via Cursor's plugin settings (ships `.cursor-plugin/plugin.json`).
 
-## What you get
+## What's inside
 
-- The PandaSuite MCP (code mode): session tools `openProject` / `getCurrentProject`, account discovery `listPublications` / `listChannels`, plus `describe` (the catalog manual) and `execute` (runs JavaScript over the `codemode.*` catalog).
-- Skills that guide the agent:
-  - `getting-started` — operate the MCP (the connect → `openProject` → `describe` → `execute` flow, read-only).
-  - `understanding-projects` — read a project the way a no-coder sees it: screens, persistent layers, and the names Studio uses (not the technical type strings).
-  - `docs-how-to` — search the documentation to answer how-to and troubleshooting questions.
+One MCP gives the agent a read-only connection; three skills teach it to use that connection well.
 
-## Use the skills in your own agent (npm)
+- **getting-started** — how to connect and read a project: the read-only contract, and the connect → open → explore flow.
+- **understanding-projects** — how to read a project the way Studio shows it: screens, foreground and background layers, and the real meaning behind technical names (the thing called a "button" is often a Multi-state; a "list" is a layout box).
+- **docs-how-to** — how to answer how-to and troubleshooting questions from the documentation and your own project together, and cite its sources.
 
-The same skills also ship as a data package, so you can inject them into an AI SDK agent (e.g. the Claude Agent SDK) instead of installing the full plugin.
+The connection is the **PandaSuite MCP** (`https://mcp.pandasuite.com`) — read-only, one Studio project at a time. It discovers what a project contains from the live catalog, not a frozen list, so it stays accurate as PandaSuite evolves.
+
+## Use the skills in your own agent
+
+The skills also ship as a data package, so you can drop them into your own AI SDK agent (e.g. the Claude Agent SDK) without installing the full plugin.
 
 ```sh
 npm install @pandasuite/skills
@@ -44,7 +56,7 @@ const gettingStarted = skills.find((s) => s.name === "getting-started");
 console.log(gettingStarted?.body); // the SKILL.md markdown, ready to inject
 ```
 
-Each entry is parsed from a `SKILL.md`: `name`, `description`, the markdown `body`, and any companion `files` (relative path → contents). Tool names in the bodies are harness-neutral (no `mcp__` prefix), so they work as-is in an AI SDK runtime.
+Each entry comes from a `SKILL.md`: its `name`, `description`, the markdown `body`, and any companion `files` (relative path → contents). Tool names in the bodies are harness-neutral (no `mcp__` prefix), so they work as-is in an AI SDK runtime.
 
 ## Legal
 
