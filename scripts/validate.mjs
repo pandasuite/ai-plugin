@@ -5,6 +5,8 @@ const ROOT = process.cwd();
 const EXPECTED_FILES = [
   ".mcp.json",
   "mcp.json",
+  "mcp_config.json",
+  "plugin.json",
   ".claude-plugin/plugin.json",
   ".claude-plugin/marketplace.json",
   ".codex-plugin/plugin.json",
@@ -139,6 +141,8 @@ async function validateManifests() {
   const claudeMarketplace = await readJson(".claude-plugin/marketplace.json");
   const mcp = await readJson("mcp.json");
   const dotMcp = await readJson(".mcp.json");
+  const antigravity = await readJson("plugin.json");
+  const mcpConfig = await readJson("mcp_config.json");
   const packageVersion = pkg?.version;
 
   if (!/^\d+\.\d+\.\d+$/.test(packageVersion ?? "")) {
@@ -153,6 +157,7 @@ async function validateManifests() {
     [".claude-plugin/plugin.json", claude],
     [".cursor-plugin/plugin.json", cursor],
     ["gemini-extension.json", gemini],
+    ["plugin.json", antigravity],
   ]) {
     if (!manifest) continue;
     if (manifest.name !== "pandasuite") fail(`${file}: name must be pandasuite`);
@@ -174,6 +179,16 @@ async function validateManifests() {
     }
   }
 
+  if (antigravity) {
+    if (antigravity.skills !== "./skills/") fail("plugin.json: skills must point to ./skills/");
+    if (antigravity.mcpServers !== "./mcp_config.json") {
+      fail("plugin.json: mcpServers must point to ./mcp_config.json");
+    }
+    if (antigravity.interface?.logo !== "./assets/logo.svg") {
+      fail("plugin.json: interface.logo must point to ./assets/logo.svg");
+    }
+  }
+
   for (const [file, config] of [
     ["mcp.json", mcp],
     [".mcp.json", dotMcp],
@@ -182,6 +197,11 @@ async function validateManifests() {
     if (server?.type !== "http" || server?.url !== "https://mcp.pandasuite.com/mcp") {
       fail(`${file}: unexpected PandaSuite MCP server config`);
     }
+  }
+
+  const antigravityServer = mcpConfig?.mcpServers?.pandasuite;
+  if (antigravityServer?.serverUrl !== "https://mcp.pandasuite.com/mcp") {
+    fail("mcp_config.json: unexpected PandaSuite MCP server config");
   }
 
   const agentsPlugin = agentsMarketplace?.plugins?.[0];

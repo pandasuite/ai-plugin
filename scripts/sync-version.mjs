@@ -4,6 +4,7 @@ import path from "node:path";
 const VERSIONED_MANIFESTS = [
   "package.json",
   "package-lock.json",
+  "plugin.json",
   ".claude-plugin/plugin.json",
   ".codex-plugin/plugin.json",
   ".cursor-plugin/plugin.json",

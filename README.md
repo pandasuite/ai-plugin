@@ -12,7 +12,7 @@ Ask it to:
 
 It's **read-only**. The agent sees your project; it never changes it.
 
-Works in Claude Code, Codex, Cursor, and Gemini CLI. Sign-in is OAuth in the browser — no API key to paste.
+Works in Claude Code, Codex, Cursor, Antigravity, and Gemini CLI. Sign-in is OAuth in the browser — no API key to paste.
 
 ## Install
 
@@ -22,6 +22,12 @@ Works in Claude Code, Codex, Cursor, and Gemini CLI. Sign-in is OAuth in the bro
 
 **Gemini CLI**
 - `gemini extensions install https://github.com/pandasuite/ai-plugin`
+- Note: Gemini CLI is being folded into Antigravity; consumer access (free and AI Pro/Ultra) ends June 18, 2026 (enterprise licenses keep it). New users → use Antigravity below.
+
+**Antigravity**
+- CLI: `agy plugin install https://github.com/pandasuite/ai-plugin` — installs the skills and the MCP together.
+- IDE: add the plugin from the **Customizations** page.
+- OAuth runs on first use — ask the agent about your project and it'll prompt.
 
 **Codex**
 - `codex plugin marketplace add pandasuite/ai-plugin`, then `codex plugin add pandasuite@pandasuite` (or run `codex` and use `/plugins`).
