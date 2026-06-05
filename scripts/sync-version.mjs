@@ -8,6 +8,7 @@ const VERSIONED_MANIFESTS = [
   ".claude-plugin/plugin.json",
   ".codex-plugin/plugin.json",
   ".cursor-plugin/plugin.json",
+  "gemini-extension.json",
 ];
 
 const version = process.argv[2];

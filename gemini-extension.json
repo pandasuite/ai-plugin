@@ -1,0 +1,15 @@
+{
+  "name": "pandasuite",
+  "version": "0.2.2",
+  "description": "Explore and understand PandaSuite Studio projects from Gemini CLI.",
+  "mcpServers": {
+    "pandasuite": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "https://mcp.pandasuite.com/mcp"
+      ]
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}
