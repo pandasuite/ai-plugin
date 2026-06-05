@@ -6,7 +6,7 @@
     "pandasuite": {
       "command": "npx",
       "args": [
-        "mcp-remote@latest",
+        "mcp-remote@0.1.38",
         "https://mcp.pandasuite.com/mcp"
       ]
     }
