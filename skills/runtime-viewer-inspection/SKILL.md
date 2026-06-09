@@ -11,13 +11,15 @@ The Studio MCP tells you what a project is **configured** to do; the published *
 
 Read the project first — `openProject`, `describe`, `execute` (getting-started skill) answer "what's configured" faster and more reliably than any runtime probe. Open the viewer only when the question is about what *happens*: navigation, show/hide, timers, gestures, conditions, variables, local data, bindings — behavior you can't read off the configuration with confidence.
 
-Given a publication short id, open it with the debug flag:
+The published viewer lives at `https://viewer.pandasuite.com/{shortId}`. If the conversation already contains such a URL — customers usually paste it — open it directly; you don't need `listPublications`. Otherwise get the `shortId` from `listPublications` (one per publication).
+
+Open it with the debug console:
 
 ```text
 https://viewer.pandasuite.com/{shortId}?debug
 ```
 
-`?debug` makes the viewer narrate itself to the console — that trace is what you read cause and effect from.
+`?debug` (INFO level) makes the viewer narrate itself to the console — that trace is what you read cause and effect from. When INFO isn't enough, escalate to `?debug=5` (DEBUG) for the fine-grained trace.
 
 ## Probe one thing at a time
 
