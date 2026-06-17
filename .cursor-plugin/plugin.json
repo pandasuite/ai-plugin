@@ -1,7 +1,7 @@
 {
   "name": "pandasuite",
   "displayName": "PandaSuite",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Explore and understand PandaSuite Studio projects from Cursor.",
   "author": {
     "name": "PandaSuite"

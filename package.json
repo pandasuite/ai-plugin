@@ -1,6 +1,6 @@
 {
   "name": "@pandasuite/skills",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "PandaSuite agent skills (operate the PandaSuite MCP, read a project, answer from the docs), packaged as data for AI SDK runtimes.",
   "type": "module",
   "license": "MIT",
