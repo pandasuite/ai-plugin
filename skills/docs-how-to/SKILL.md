@@ -10,7 +10,7 @@ The answer usually lives in two places, at the **same level**:
 - **The documentation** (`searchDocs`) — how a feature is meant to work, and *where to look* for it.
 - **The user's own project** — how *this* app is actually built; it often already holds the answer (understanding-projects skill).
 
-Neither outranks the other. The project can tell you a lot early, before any doc lookup; the docs point you, in a structured way, to where to look in the project. Reading the project alone can be uncertain — let the docs anchor it — but don't answer from the docs alone when the app itself shows the truth. Use both, and let each guide the other.
+Neither outranks the other. The project can tell you a lot early, before any doc lookup; the docs point you, in a structured way, to where to look in the project. Reading the project alone can be uncertain — let the docs anchor it — but don't answer from the docs alone when the app itself shows the truth. Use both, and let each guide the other. If the question is about their app but no project is open yet, open theirs first (getting-started) — recover it from a link they sent, or their most recently edited project — instead of answering blind or asking them to resend a link you can usually recover yourself.
 
 - **Cite** the documentation you used.
 - **Don't give up on one empty search** — rephrase (the feature's user-facing name, the symptom). Empty results don't mean it's undocumented.
