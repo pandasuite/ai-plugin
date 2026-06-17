@@ -21,3 +21,4 @@ Each step is a separate MCP tool call:
 - First call triggers OAuth sign-in.
 - The `type` and ids you read (`worldId`, …) are internal — never surface them to the user; translate to Studio names first (understanding-projects skill).
 - `listComponents` / `getManifest` inspect a component *type's* contract and work **without** an open project.
+- `openProject` doesn't load *DataProviders* (Datastores) — you open each one explicitly when you need it. So a `getQueryableView` that comes back `state: "closed"` / `node: null` means *not loaded yet*, not *empty*; describe's `getQueryableView` / `openDataProvider` entries say how.
