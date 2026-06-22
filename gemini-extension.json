@@ -1,6 +1,6 @@
 {
   "name": "pandasuite",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Explore and understand PandaSuite Studio projects from Gemini CLI.",
   "mcpServers": {
     "pandasuite": {
