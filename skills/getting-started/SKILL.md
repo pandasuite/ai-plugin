@@ -1,6 +1,6 @@
 ---
 name: getting-started
-description: Use when connecting to the PandaSuite MCP or reading a Studio project — the read-only contract and how to operate its describe / execute catalog tools.
+description: Use when reading the user's own Studio project would ground your answer — they describe or name parts of their project (screens, Datastores, collections, components, item counts, bindings or actions), paste a Studio or dashboard link, or ask why their specific setup behaves the way it does; and when they're asking about their own project but the link they gave is missing, broken, or invalid, open their most recently edited project instead of asking them to resend it. Also covers operating the read-only PandaSuite MCP — discovering and opening a project and its describe / execute catalog.
 ---
 
 # Operating the PandaSuite MCP
