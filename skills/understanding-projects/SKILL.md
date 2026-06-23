@@ -37,4 +37,4 @@ The raw layer is for *your* reasoning, not the user's eyes — read it freely, t
 
 Pure plumbing — translate or omit: `statestack`, `TMWorld`, `rootunit`, `worldId`, `did`, `masterFront`/`masterBack` (say "Foreground"/"Background"), and the raw `type` ids (`button`, `list`, …).
 
-**Binding & action expressions** (`[data:…]`, `…/@getByIndex`, `[eval:…]`) — never paste the raw string; say what the binding *does*, in the source/field names the user sees, resolved from the project + `searchDocs` (e.g. a collection exposes **Current Item** / *Élément courant*). Don't reproduce the path or invent a separator notation.
+**Binding & action expressions** (`[data:…]`, `…/@getByIndex`, `[eval:…]`) — never paste the raw string; say what the binding *does*, in the source/field names the user sees, resolved from the project + `searchDocs` — e.g. `getById` on a **Collection** source reads via **Current Item** / *Élément courant* (a reference to the row), `getByIndex` on an **Array** source via **Current Index** / *Index courant* (a position). Don't reproduce the path or invent a separator notation.
