@@ -23,9 +23,11 @@ A unit's technical `type` (`button`, `list`, `html`, …) is **not** the name th
 ## The mental model (not in the catalog — keep it in mind)
 
 - **Screens** (one per `ViewFolder`). **Only one shows at a time**; the app navigates between them. Start any explanation here.
+- **States** — the same idea as screens, one level down: a container can hold several **states**, each a saved arrangement of elements — which show, and where/how each looks — with one active at a time. Multi-states, galleries and pop-ups all work this way, so switching state can show, hide, move, or restyle an element, not only swap content.
 - **Foreground** (*Avant-plan*) and **Background** (*Arrière-plan*) — optional layers in front of / behind a screen's content (a header that stays put, a backdrop). Many screens have neither. Internally "masters" (`masterFront`/`masterBack`); the user only ever hears "Foreground" / "Background".
 - **The project level** — the `rootUnit`, holding what's shared everywhere: dimensions, device, colors, languages, fonts.
-- **Interactivity & data** — behavior reads as *when [something happens], do [something]*; a **binding** is a value pulled live from elsewhere (it updates on its own).
+- **Properties** — many visible and behavioral settings live on properties. Depending on the property, its value can be fixed, **bound** to live data from a source (a **Datastore**, or another component's exposed data) that refreshes when the source changes, **overridden per state**, or **translated per language**. Bindings, states and languages can all affect the same property surface.
+- **Behavior** — components react and drive each other: **events** say when something happens — a tap, a state entered, data arriving — and **actions** say what to do to a target. **Conditions** tie data to behavior: an action can be gated by one, and a condition re-evaluates its rules as a set when one of its source values changes — a true result can then trigger actions.
 
 ## Rich behavior is composed
 
