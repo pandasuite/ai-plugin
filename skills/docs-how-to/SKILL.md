@@ -14,6 +14,7 @@ Neither outranks the other. The project can tell you a lot early, before any doc
 
 - **Cite** the documentation you used.
 - **Don't give up on one empty search** — rephrase (the feature's user-facing name, the symptom). Empty results don't mean it's undocumented.
+- **Lead with what you found, not the symptom** — once inspection identifies the component, feature, or data source behind the behavior, search the docs by those names first, even when they differ from the user's words.
 - Answer in the user's language, in Studio terms.
 
 Use your environment's documentation-search tool to look things up — it may be exposed as `searchDocs` or `search_docs` depending on the client.
