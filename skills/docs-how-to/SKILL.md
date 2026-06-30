@@ -12,6 +12,8 @@ The answer usually lives in two places, at the **same level**:
 
 Neither outranks the other. The project can tell you a lot early, before any doc lookup; the docs point you, in a structured way, to where to look in the project. Reading the project alone can be uncertain — let the docs anchor it — but don't answer from the docs alone when the app itself shows the truth. Use both, and let each guide the other. If the question is about their app and you can open their project (getting-started), open it first — recover it from a link they sent, or their most recently edited one — rather than answering blind.
 
+The same goal usually has more than one valid mechanism — and a solution can look right only because you don't yet know the PandaSuite feature that does it natively. So don't build out the first that works; first check the native vocabulary — a component's own actions and events, the docs by the feature's Studio name — and prefer the lightest mechanism that fits how this app is already built, recomposing components already in play (their own states, relative transitions, an existing event or action) over adding new shared infrastructure. Reach for a structural construct — a data source, shared variables, a collection — only when the problem is itself structural (lots of repeated data, state shared across screens) or it genuinely simplifies the build; don't make it the default, and don't avoid it when it's the elegant fit.
+
 - **Cite** the documentation you used.
 - **Don't give up on one empty search** — rephrase (the feature's user-facing name, the symptom). Empty results don't mean it's undocumented.
 - Answer in the user's language, in Studio terms.
