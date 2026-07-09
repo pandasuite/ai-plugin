@@ -20,13 +20,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: "https://registry.npmjs.org"
 
-      # Trusted publishing needs npm >= 11.5.1; Node 22 ships an older npm.
-      - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest
-
+      # Node 24 already bundles npm >= 11.5.1 (required for OIDC trusted
+      # publishing), so no global npm upgrade is needed. The old
+      # `npm install -g npm@latest` step left the runner's npm unable to load
+      # `sigstore`, which broke `npm publish` provenance generation.
       - run: npm ci
 
       # prepublishOnly (npm run build && npm test) builds dist/ and validates
