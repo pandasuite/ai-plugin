@@ -1,6 +1,6 @@
 ---
 name: understanding-projects
-description: Use when exploring, describing, or explaining a PandaSuite project to a user — its screens, navigation, persistent layers (masters/foreground/background), components, and interactivity. Translates the MCP's technical type names into the names users see in Studio and keeps explanations jargon-free for non-developers (no-coders).
+description: Use when exploring, describing, or explaining a PandaSuite project to a user — its screens, navigation, persistent layers (masters/foreground/background), components, and interactivity — including when a question turns on which underlying object or source actually governs a behavior. Translates the MCP's technical type names into the names users see in Studio and keeps explanations jargon-free for non-developers (no-coders).
 ---
 
 # Understanding a PandaSuite project
