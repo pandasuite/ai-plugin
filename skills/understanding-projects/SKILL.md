@@ -1,6 +1,6 @@
 ---
 name: understanding-projects
-description: Use when exploring, describing, or explaining a PandaSuite project to a user — its screens, navigation, persistent layers (masters/foreground/background), components, and interactivity — including when a question turns on which underlying object or source actually governs a behavior. Translates the MCP's technical type names into the names users see in Studio and keeps explanations jargon-free for non-developers (no-coders).
+description: Use alongside getting-started and docs-how-to whenever you read a project's raw MCP output (type ids, bindings, actions, or states), because those names mislead and this is the only skill that decodes them. A button is really a Multi-state, a list a layout box, a collection the real data list. It turns that raw output into the screens, elements, and Foreground/Background layers users see in Studio, jargon-free for non-developers (no-coders). It doesn't operate the MCP or search the docs.
 ---
 
 # Understanding a PandaSuite project
