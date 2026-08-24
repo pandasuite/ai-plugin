@@ -36,6 +36,9 @@ Works in Claude Code, Codex, Cursor, Antigravity, and Gemini CLI. Sign-in is OAu
 **Cursor**
 - Install from this repo via Cursor's plugin settings (ships `.cursor-plugin/plugin.json`).
 
+**Any Agent Plugins client** (VS Code / GitHub Copilot, Kiro, …)
+- This repo is a conformant [Agent Plugins 1.0.0](https://agent-plugins.org) package — `plugin.json` and `mcp.json` at the root, skills under `skills/` — so any client implementing the standard can install it straight from the Git URL `https://github.com/pandasuite/ai-plugin`.
+
 ## What's inside
 
 One MCP gives the agent a read-only connection; four skills teach it to use that connection well.

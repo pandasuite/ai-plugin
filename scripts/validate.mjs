@@ -5,6 +5,7 @@ const ROOT = process.cwd();
 const EXPECTED_FILES = [
   ".mcp.json",
   "mcp.json",
+  "plugin.json",
   ".claude-plugin/plugin.json",
   ".claude-plugin/marketplace.json",
   ".codex-plugin/plugin.json",
@@ -23,10 +24,39 @@ const EXPECTED_FILES = [
 ];
 
 const IGNORED_DIRS = new Set([".git", ".omx", "node_modules"]);
+
+// Agent Plugins 1.0.0 (https://agent-plugins.org) — the portable manifest at the
+// repo root. Its schema is closed: any field outside this list is a spec violation.
+const SPEC_SCHEMA = "https://agent-plugins.org/schemas/1.0.0";
+const SPEC_PLUGIN_FIELDS = new Set([
+  "$schema",
+  "name",
+  "version",
+  "description",
+  "author",
+  "homepage",
+  "repository",
+  "license",
+  "keywords",
+  "extensions",
+]);
+
 const failures = [];
 
 function fail(message) {
   failures.push(message);
+}
+
+// Order-insensitive deep compare, so a reordered key never reads as drift.
+function stableStringify(value) {
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value ?? null);
 }
 
 async function pathExists(relativePath) {
@@ -129,6 +159,7 @@ async function validateNoClientPrefixedTools() {
 }
 
 async function validateManifests() {
+  const plugin = await readJson("plugin.json");
   const codex = await readJson(".codex-plugin/plugin.json");
   const claude = await readJson(".claude-plugin/plugin.json");
   const cursor = await readJson(".cursor-plugin/plugin.json");
@@ -149,6 +180,7 @@ async function validateManifests() {
   }
 
   for (const [file, manifest] of [
+    ["plugin.json", plugin],
     [".codex-plugin/plugin.json", codex],
     [".claude-plugin/plugin.json", claude],
     [".cursor-plugin/plugin.json", cursor],
@@ -164,6 +196,27 @@ async function validateManifests() {
     }
   }
 
+  if (plugin) {
+    if (plugin.$schema !== `${SPEC_SCHEMA}/plugin.schema.json`) {
+      fail(`plugin.json: $schema must be ${SPEC_SCHEMA}/plugin.schema.json`);
+    }
+    for (const key of Object.keys(plugin)) {
+      if (!SPEC_PLUGIN_FIELDS.has(key)) {
+        fail(`plugin.json: "${key}" is not allowed by the Agent Plugins 1.0.0 closed schema`);
+      }
+    }
+
+    // Codex reads the root manifest in preference to .codex-plugin/plugin.json, but the
+    // spec's closed schema bars `interface` from the top level — it has to ride under the
+    // com.openai namespace. Two copies, so pin them together.
+    const codexInterface = plugin.extensions?.["com.openai"]?.interface;
+    if (codex && stableStringify(codexInterface) !== stableStringify(codex.interface)) {
+      fail(
+        'plugin.json: extensions["com.openai"].interface must match .codex-plugin/plugin.json interface',
+      );
+    }
+  }
+
   if (codex) {
     if (codex.skills !== "./skills/") fail(".codex-plugin/plugin.json: skills must point to ./skills/");
     if (codex.mcpServers !== "./.mcp.json") {
@@ -174,12 +227,18 @@ async function validateManifests() {
     }
   }
 
-  for (const [file, config] of [
-    ["mcp.json", mcp],
-    [".mcp.json", dotMcp],
+  // mcp.json is the Agent Plugins manifest (spec transport name); .mcp.json is the
+  // client-native one Claude Code and Codex read, which still spells it "http".
+  if (mcp && mcp.$schema !== `${SPEC_SCHEMA}/mcp.schema.json`) {
+    fail(`mcp.json: $schema must be ${SPEC_SCHEMA}/mcp.schema.json`);
+  }
+
+  for (const [file, config, transport] of [
+    ["mcp.json", mcp, "streamable-http"],
+    [".mcp.json", dotMcp, "http"],
   ]) {
     const server = config?.mcpServers?.pandasuite;
-    if (server?.type !== "http" || server?.url !== "https://mcp.pandasuite.com/mcp") {
+    if (server?.type !== transport || server?.url !== "https://mcp.pandasuite.com/mcp") {
       fail(`${file}: unexpected PandaSuite MCP server config`);
     }
   }
