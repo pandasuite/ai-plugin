@@ -11,10 +11,10 @@ This MCP exposes a **read-only** view of a PandaSuite Studio *project* — scree
 
 Each step is a separate MCP tool call:
 
-1. **`listPublications({})`** — discover the account's projects; the value you open is a folder id at `publications[].folders[].id`. *(An id pasted from a Studio dashboard/editor link is a publication id, not a folder id — pass it as `query` here, then open a folder from the match.)* Each publication has a `name` and an `archived` flag; both publications and folders carry an `updatedAt`, and a publication has one folder per device (folders have no name). So when a project link is missing or invalid, don't ask the user to resend it — open the most recently edited non-archived project (newest publication `updatedAt`, then its newest folder), or a clear name match.
-2. **`openProject({ folder_id })`** — set the current project. Required first, or catalog calls fail with `NoCurrentProject`.
-3. **`describe({})`** — the manual of every `codemode.*` function available in `execute`, with signatures and worked examples. It is the source of truth for the live catalog; read it rather than memorizing.
-4. **`execute({ code })`** — run **JavaScript** (not TypeScript — the catalog types are documentation only) that calls `codemode.*` functions and `return`s a result.
+1. **`listPublications({})`** — discover the account's projects. Each publication has a `name` and an `archived` flag; both publications and their device projects (`publications[].folders[]`, which have no name) carry an `updatedAt`. So when a project link is missing or invalid, don't ask the user to resend it — open the most recently edited non-archived publication (newest `updatedAt`), or a clear name match.
+2. **`openProject({ id })`** — set the current project. `id` is a publication id, a project id (`publications[].folders[].id`) or a shortId; an id pasted from a dashboard, Studio or viewer link goes here directly. A publication opens its most recent development project unless `device` chooses one. Required first, or `project.*` calls fail with `no_current_project`.
+3. **`describe({})`** — the manual of every `project.*` and `account.*` function available in `execute`, with signatures and worked examples. It is the source of truth for the live catalog; read it rather than memorizing.
+4. **`execute({ code })`** — run **JavaScript** (not TypeScript — the catalog types are documentation only) that calls `project.*` / `account.*` functions and `return`s a result.
 
 ## Worth knowing
 
