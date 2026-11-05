@@ -11,7 +11,7 @@
     "release": true
   },
   "hooks": {
-    "after:bump": "node scripts/sync-version.mjs ${version}",
+    "after:bump": ["node scripts/sync-version.mjs ${version}", "node scripts/sync-codex.mjs"],
     "before:git:release": "npm test"
   }
 }

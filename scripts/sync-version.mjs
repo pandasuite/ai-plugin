@@ -6,7 +6,6 @@ const VERSIONED_MANIFESTS = [
   "package-lock.json",
   "plugin.json",
   ".claude-plugin/plugin.json",
-  "codex/.codex-plugin/plugin.json",
   ".cursor-plugin/plugin.json",
   "gemini-extension.json",
 ];
