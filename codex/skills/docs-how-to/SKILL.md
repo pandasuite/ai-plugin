@@ -1,0 +1,25 @@
+---
+name: docs-how-to
+description: Use when the user asks how to build something in PandaSuite, whether a feature is supported, or why something isn't working (e.g. an audio that won't play, a link that doesn't trigger). Answer from two sources at the same level — the documentation (searchDocs) and the user's own project — letting each guide the other, and cite the docs you use.
+---
+
+# Answering how-to and troubleshooting questions
+
+The answer usually lives in two places, at the **same level**:
+
+- **The documentation** (`searchDocs`) — how a feature is meant to work, and *where to look* for it.
+- **The user's own project** — how *this* app is actually built; it often already holds the answer (understanding-projects skill).
+
+Neither outranks the other. The project can tell you a lot early, before any doc lookup; the docs point you, in a structured way, to where to look in the project. Reading the project alone can be uncertain — let the docs anchor it — but don't answer from the docs alone when the app itself shows the truth. Use both, and let each guide the other. If the question is about their app and you can open their project (getting-started), open it first — recover it from a link they sent, or their most recently edited one — rather than answering blind.
+
+Before you answer, name the claim and the mechanism that decides it, then read the direct evidence for that mechanism itself. A same-named neighbour, a look-alike, or a guess about what happens at runtime can point you toward that evidence, but none of them is it. When the deciding evidence can't be reached — a lookup blocked, empty, or denied — that is itself a finding: work from what you can read without it, and keep the conclusion within that evidence rather than closing the gap with the nearest proxy.
+
+The same goal usually has more than one valid mechanism — and a solution can look right only because you don't yet know the PandaSuite feature that does it natively. So don't build out the first that works; first check the native vocabulary — a component's own actions and events, the docs by the feature's Studio name — and prefer the lightest mechanism that fits how this app is already built, recomposing components already in play (their own states, relative transitions, an existing event or action) over adding new shared infrastructure. Reach for a structural construct — a data source, shared variables, a collection — only when the problem is itself structural (lots of repeated data, state shared across screens) or it genuinely simplifies the build; don't make it the default, and don't avoid it when it's the elegant fit. Follow each plausible native path far enough to either select it or establish that none is supported by the available evidence.
+
+For anything about layout — how an element sizes, moves, or reflows across screens — the outcome turns on the whole chain of containers above it, from its top-level layer (the screen, or its Foreground or Background) down to the element. Each level's mode constrains the ones inside it, so a child's own setting can be overridden by its parent; read that chain top-down before tuning the element.
+
+- **Cite** the documentation you used.
+- **Don't give up on one empty search** — rephrase (the feature's user-facing name, the symptom). Empty results don't mean it's undocumented.
+- Answer in the user's language, in Studio terms.
+
+Use your environment's documentation-search tool to look things up — it may be exposed as `searchDocs` or `search_docs` depending on the client.

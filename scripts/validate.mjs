@@ -1,5 +1,6 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { CODEX_COPIES } from "./sync-codex.mjs";
 
 const ROOT = process.cwd();
 const EXPECTED_FILES = [
@@ -8,7 +9,7 @@ const EXPECTED_FILES = [
   "plugin.json",
   ".claude-plugin/plugin.json",
   ".claude-plugin/marketplace.json",
-  ".codex-plugin/plugin.json",
+  "codex/.codex-plugin/plugin.json",
   ".cursor-plugin/plugin.json",
   "gemini-extension.json",
   "GEMINI.md",
@@ -160,7 +161,7 @@ async function validateNoClientPrefixedTools() {
 
 async function validateManifests() {
   const plugin = await readJson("plugin.json");
-  const codex = await readJson(".codex-plugin/plugin.json");
+  const codex = await readJson("codex/.codex-plugin/plugin.json");
   const claude = await readJson(".claude-plugin/plugin.json");
   const cursor = await readJson(".cursor-plugin/plugin.json");
   const gemini = await readJson("gemini-extension.json");
@@ -181,7 +182,7 @@ async function validateManifests() {
 
   for (const [file, manifest] of [
     ["plugin.json", plugin],
-    [".codex-plugin/plugin.json", codex],
+    ["codex/.codex-plugin/plugin.json", codex],
     [".claude-plugin/plugin.json", claude],
     [".cursor-plugin/plugin.json", cursor],
     ["gemini-extension.json", gemini],
@@ -212,18 +213,18 @@ async function validateManifests() {
     const codexInterface = plugin.extensions?.["com.openai"]?.interface;
     if (codex && stableStringify(codexInterface) !== stableStringify(codex.interface)) {
       fail(
-        'plugin.json: extensions["com.openai"].interface must match .codex-plugin/plugin.json interface',
+        'plugin.json: extensions["com.openai"].interface must match codex/.codex-plugin/plugin.json interface',
       );
     }
   }
 
   if (codex) {
-    if (codex.skills !== "./skills/") fail(".codex-plugin/plugin.json: skills must point to ./skills/");
+    if (codex.skills !== "./skills/") fail("codex/.codex-plugin/plugin.json: skills must point to ./skills/");
     if (codex.mcpServers !== "./.mcp.json") {
-      fail(".codex-plugin/plugin.json: mcpServers must point to ./.mcp.json");
+      fail("codex/.codex-plugin/plugin.json: mcpServers must point to ./.mcp.json");
     }
     if (codex.interface?.logo !== "./assets/logo.svg") {
-      fail(".codex-plugin/plugin.json: interface.logo must point to ./assets/logo.svg");
+      fail("codex/.codex-plugin/plugin.json: interface.logo must point to ./assets/logo.svg");
     }
   }
 
@@ -247,8 +248,8 @@ async function validateManifests() {
   if (agentsMarketplace?.name !== "pandasuite" || agentsPlugin?.name !== "pandasuite") {
     fail(".agents/plugins/marketplace.json: marketplace and plugin names must be pandasuite");
   }
-  if (agentsPlugin?.source?.url !== "https://github.com/pandasuite/ai-plugin.git") {
-    fail(".agents/plugins/marketplace.json: plugin source URL is unexpected");
+  if (agentsPlugin?.source?.source !== "local" || agentsPlugin?.source?.path !== "./codex") {
+    fail('.agents/plugins/marketplace.json: plugin source must be the local path "./codex"');
   }
 
   const claudePlugin = claudeMarketplace?.plugins?.[0];
@@ -260,12 +261,40 @@ async function validateManifests() {
   }
 }
 
+async function filesUnder(relativePath) {
+  if (!(await pathExists(relativePath))) return [];
+  if (!(await stat(path.join(ROOT, relativePath))).isDirectory()) return [relativePath];
+  const files = [];
+  for await (const file of walkFiles(relativePath)) files.push(file);
+  return files.sort();
+}
+
+// Codex installs codex/ in its native format (scripts/sync-codex.mjs).
+async function validateCodexPackage() {
+  if (await pathExists("codex/plugin.json")) {
+    fail(
+      "codex/plugin.json: must not exist — Codex would load codex/ as an Agent Plugin, whose MCP tools are hidden past a 64 KB budget",
+    );
+  }
+  for (const source of CODEX_COPIES) {
+    const expected = await filesUnder(source);
+    const copies = (await filesUnder(`codex/${source}`)).map((file) => file.slice("codex/".length));
+    const drifted =
+      expected.join("\n") !== copies.join("\n") ||
+      (await Promise.all(
+        expected.map(async (file) => (await readText(file)) !== (await readText(`codex/${file}`))),
+      )).some(Boolean);
+    if (drifted) fail(`codex/${source}: differs from ${source} — run npm run codex:sync`);
+  }
+}
+
 await validateExpectedFiles();
 await validateJsonFiles();
 await validateLogo();
 await validateSkillFrontmatter();
 await validateNoClientPrefixedTools();
 await validateManifests();
+await validateCodexPackage();
 
 if (failures.length) {
   console.error("Validation failed:");
