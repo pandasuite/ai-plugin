@@ -1,6 +1,6 @@
 {
   "name": "pandasuite",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Explore and understand PandaSuite Studio projects — screens, units, structure, and state (read-only).",
   "author": {
     "name": "PandaSuite",
