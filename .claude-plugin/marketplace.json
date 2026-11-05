@@ -6,7 +6,7 @@
     {
       "name": "pandasuite",
       "source": "./",
-      "description": "Explore and understand PandaSuite Studio projects — screens, units, structure, and state (read-only)."
+      "description": "Explore and understand PandaSuite Studio projects — screens, units, structure, and state."
     }
   ]
 }

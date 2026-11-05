@@ -10,7 +10,7 @@ Ask it to:
 - **Work out why something won't work** — an audio that won't play, a link that doesn't trigger — by reading both the documentation and how your app is actually built.
 - **Show you how to make something** — what's behind a set of tabs, or a parallax — grounded in the docs, not guesswork.
 
-It's **read-only**. The agent sees your project; it never changes it.
+Reading never changes your project. Editing goes through separate tools; the agent's edits join the project's unsaved draft, like a teammate's, until it saves.
 
 Works in Claude Code, Codex, Cursor, Antigravity, and Gemini CLI. Sign-in is OAuth in the browser — no API key to paste.
 
@@ -42,14 +42,14 @@ Works in Claude Code, Codex, Cursor, Antigravity, and Gemini CLI. Sign-in is OAu
 
 ## What's inside
 
-One MCP gives the agent a read-only connection; four skills teach it to use that connection well.
+One MCP connects the agent to your project; four skills teach it to use that connection well.
 
-- **getting-started** — how to connect and read a project: the read-only contract, and the connect → open → explore flow.
+- **getting-started** — how to connect and read a project: what reads and writes are, and the connect → open → explore flow.
 - **understanding-projects** — how to read a project the way Studio shows it: screens, foreground and background layers, and the real meaning behind technical names (the thing called a "button" is often a Multi-state; a "list" is a layout box).
 - **docs-how-to** — how to answer how-to and troubleshooting questions from the documentation and your own project together, and cite its sources.
 - **runtime-viewer-inspection** — the escalation when what's configured doesn't explain what the published app actually does: open the live viewer, drive one action at a time, and pin down the discrepancy.
 
-The connection is the **PandaSuite MCP** (`https://mcp.pandasuite.com/mcp`) — read-only, one Studio project at a time. It discovers what a project contains from the live catalog, not a frozen list, so it stays accurate as PandaSuite evolves.
+The connection is the **PandaSuite MCP** (`https://mcp.pandasuite.com/mcp`) — one Studio project at a time. It discovers what a project contains from the live catalog, not a frozen list, so it stays accurate as PandaSuite evolves.
 
 ## Use the skills in your own agent
 
