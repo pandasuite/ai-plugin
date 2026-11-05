@@ -38,6 +38,7 @@
   },
   "scripts": {
     "build": "node scripts/generate-skills.mjs",
+    "codex:sync": "node scripts/sync-codex.mjs",
     "prepublishOnly": "npm run build && npm test",
     "release": "release-it",
     "test": "node scripts/validate.mjs",
