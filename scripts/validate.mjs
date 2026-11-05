@@ -1,6 +1,6 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
-import { CODEX_COPIES } from "./sync-codex.mjs";
+import { CODEX_COPIES, CODEX_MANIFEST, codexManifest, serializeManifest } from "./sync-codex.mjs";
 
 const ROOT = process.cwd();
 const EXPECTED_FILES = [
@@ -46,18 +46,6 @@ const failures = [];
 
 function fail(message) {
   failures.push(message);
-}
-
-// Order-insensitive deep compare, so a reordered key never reads as drift.
-function stableStringify(value) {
-  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
-  if (value && typeof value === "object") {
-    return `{${Object.keys(value)
-      .sort()
-      .map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
-      .join(",")}}`;
-  }
-  return JSON.stringify(value ?? null);
 }
 
 async function pathExists(relativePath) {
@@ -206,26 +194,6 @@ async function validateManifests() {
         fail(`plugin.json: "${key}" is not allowed by the Agent Plugins 1.0.0 closed schema`);
       }
     }
-
-    // Codex reads the root manifest in preference to .codex-plugin/plugin.json, but the
-    // spec's closed schema bars `interface` from the top level — it has to ride under the
-    // com.openai namespace. Two copies, so pin them together.
-    const codexInterface = plugin.extensions?.["com.openai"]?.interface;
-    if (codex && stableStringify(codexInterface) !== stableStringify(codex.interface)) {
-      fail(
-        'plugin.json: extensions["com.openai"].interface must match codex/.codex-plugin/plugin.json interface',
-      );
-    }
-  }
-
-  if (codex) {
-    if (codex.skills !== "./skills/") fail("codex/.codex-plugin/plugin.json: skills must point to ./skills/");
-    if (codex.mcpServers !== "./.mcp.json") {
-      fail("codex/.codex-plugin/plugin.json: mcpServers must point to ./.mcp.json");
-    }
-    if (codex.interface?.logo !== "./assets/logo.svg") {
-      fail("codex/.codex-plugin/plugin.json: interface.logo must point to ./assets/logo.svg");
-    }
   }
 
   // mcp.json is the Agent Plugins manifest (spec transport name); .mcp.json is the
@@ -285,6 +253,14 @@ async function validateCodexPackage() {
         expected.map(async (file) => (await readText(file)) !== (await readText(`codex/${file}`))),
       )).some(Boolean);
     if (drifted) fail(`codex/${source}: differs from ${source} — run npm run codex:sync`);
+  }
+  const plugin = await readJson("plugin.json");
+  if (
+    plugin &&
+    (!(await pathExists(CODEX_MANIFEST)) ||
+      (await readText(CODEX_MANIFEST)) !== serializeManifest(codexManifest(plugin)))
+  ) {
+    fail(`${CODEX_MANIFEST}: differs from what plugin.json generates — run npm run codex:sync`);
   }
 }
 
